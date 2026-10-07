@@ -1,0 +1,39 @@
+\section{Methodology} \label{sec:methodology}
+
+\subsection{Problem formulation}
+
+Underwater imaging degradation is commonly modeled as a combination of transmission attenuation and ambient light scattering. For an underwater image $I(x)$ and scene radiance $J(x)$, the image formation model can be expressed as
+\begin{equation}
+I_c(x) = J_c(x) t_c(x) + A_c(1 - t_c(x)),
+\label{eq:formation}
+\end{equation}
+where $x$ is a pixel location, $c \in \{R,G,B\}$ denotes a color channel, $t_c(x)$ is the transmission map, and $A_c$ is the ambient light. In practice, underwater scenes are further affected by wavelength-dependent attenuation, which suppresses red light more aggressively than blue and green light. This produces severe color cast and low contrast. The objective is to estimate a restored image $\hat{J}(x)$ from a degraded input $I(x)$ such that the reconstructed appearance is visually natural, contrast is restored, and the color distribution approximates that of a clear-water reference.
+
+\subsection{Dual-branch architecture}
+
+We propose a dual-branch deep learning framework that decomposes the enhancement problem into a restoration stream and a color-correction stream. The restoration branch is designed to recover scene structure and transmission-aware details, while the color-correction branch explicitly learns channel-wise compensation to correct the blue-green dominance caused by underwater scattering. The two branches are then fused through an adaptive weighting module to produce the final output.
+
+The restoration branch receives the raw underwater image and encodes it through a sequence of convolutional and residual blocks. It produces an intermediate restored image $R$ and a residual map $\Delta R$, capturing de-scattering and contrast restoration. The network is optimized to preserve edge structure and suppress veiling effects, while preserving scene details in the red, green, and blue channels. The color-correction branch takes the same input and estimates per-channel gain factors $g = \{g_R, g_G, g_B\}$ and a correction map $C$, which adaptively rebalances the channels according to the observed color cast. The corrected output is computed as
+\begin{equation}
+I_{cc}(x) = G(x) \odot R(x) + C(x),
+\label{eq:color-correction}
+\end{equation}
+where $\odot$ denotes element-wise multiplication.
+
+The final enhancement result is obtained by fusing the restoration output and the corrected output through a learned confidence map $W(x)$:
+\begin{equation}
+\hat{I}(x) = W(x) \odot R(x) + (1-W(x)) \odot I_{cc}(x).
+\label{eq:fusion}
+\end{equation}
+This design is useful because it allows the model to emphasize structural restoration in regions with severe haze while giving more weight to color correction in regions with high chromatic distortion. The fusion map is learned end-to-end and allows the network to adapt to different water conditions, from shallow turbid scenes to deep blue-water imagery.
+
+\subsection{Loss function}
+
+The overall training objective combines reconstruction fidelity and structural similarity through a hybrid loss. In the final implementation, the model is optimized via
+\begin{equation}
+\mathcal{L}_{final} = 0.8\,\mathcal{L}_{1} + 0.2\,\mathcal{L}_{SSIM},
+\label{eq:loss}
+\end{equation}
+where $\mathcal{L}_{1}$ penalizes pixel-level deviation from the reference image and $\mathcal{L}_{SSIM}$ preserves local luminance, contrast, and structure. This combination is particularly suitable for underwater imagery because it simultaneously penalizes color and reconstruction errors while retaining object boundaries and texture detail.
+
+The L1 term enforces fidelity to the clean reference image, while the SSIM term preserves local contrast and luminance consistency. Together they improve the model's ability to recover both geometric detail and chromatic fidelity, which are essential for underwater visual enhancement. The proposed architecture remains lightweight yet expressive enough to model the non-linear and spatially varying degradation present in underwater scenes. Compared with single-branch networks, the dual-branch formulation provides a cleaner separation between scene restoration and color compensation, improving robustness across different turbidity levels and illumination conditions.

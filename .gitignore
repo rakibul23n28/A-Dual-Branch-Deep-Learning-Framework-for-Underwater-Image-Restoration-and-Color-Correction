@@ -1,0 +1,80 @@
+# =========================
+# LaTeX auxiliary files
+# =========================
+*.aux
+*.lof
+*.lot
+*.out
+*.toc
+*.log
+*.fls
+*.fdb_latexmk
+*.synctex
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+
+# =========================
+# Bibliography
+# =========================
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.idx
+*.ilg
+*.ind
+
+# =========================
+# Glossaries / Acronyms
+# =========================
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+
+# =========================
+# Beamer
+# =========================
+*.nav
+*.snm
+*.vrb
+
+# =========================
+# LaTeX build directories
+# =========================
+_build/
+build/
+out/
+
+# =========================
+# Temporary files
+# =========================
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+
+# =========================
+# Editor / IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# LaTeX generated PDFs
+# =========================
+# Uncomment if you DON'T want PDFs tracked
+# *.pdf

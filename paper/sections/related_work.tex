@@ -1,0 +1,27 @@
+\section{Related Work} \label{sec:related_work}
+
+Underwater image enhancement has evolved from physical priors to data-driven learning strategies. Early methods mostly relied on image formation models and handcrafted assumptions. These methods attempted to estimate scene depth, transmission maps, and ambient light under the assumption that degradation can be modeled by scattering and wavelength attenuation. While such methods were interpretable, they often failed under non-uniform lighting, suspended particles, or strong color cast, especially in complex marine environments.
+
+The field shifted substantially with the introduction of learning-based methods. WaterGAN~\cite{li2018watergan} showed that synthetic underwater image generation could help model the color and lighting distortions encountered in marine scenes. It demonstrated the benefit of using physically informed data generation to approximate underwater degradation. UGAN~\cite{fabbri2018ugan} extended this direction by using an adversarial image-to-image framework to translate in-air images into underwater-like visuals, improving robustness in real application settings. These methods marked an important transition from hand-designed priors to end-to-end learning frameworks.
+
+Subsequent work focused on directly restoring degraded underwater images. Water-Net~\cite{li2019waternet} exploited a gated fusion strategy in which multiple enhanced variants are combined to produce a final output with better contrast and color recovery. This line of research showed that multi-view enhancement cues could improve restoration quality without relying on a single handcrafted prior. FUnIE-GAN~\cite{islam2020funie} further demonstrated that lightweight generative models could provide real-time enhancement capacity for challenging underwater scenes, emphasizing practicality for robotic perception systems. More recently, Zero-DCE~\cite{guo2020zerodce} adopted a zero-reference curve-estimation approach for low-light enhancement, highlighting the potential of learning enhancement curves without paired supervision.
+
+A summary of representative methods is given in Table~\ref{tab:related_work}. The progression is clear: early models mainly relied on physical priors and transmission estimation, whereas recent methods increasingly use generative or end-to-end networks to model color, haze, and contrast degradation jointly. However, the literature still lacks a robust unified mechanism that explicitly separates physical restoration from chromatic correction while preserving detail fidelity across diverse underwater conditions. This gap motivates the proposed dual-branch framework.
+
+\begin{table*}[t]
+\centering
+\caption{Representative underwater image enhancement methods and their main contributions.}
+\label{tab:related_work}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{0.08\textwidth} p{0.18\textwidth} p{0.38\textwidth} p{0.25\textwidth}}
+\toprule
+\textbf{Year} & \textbf{Model} & \textbf{Approach} & \textbf{Strength} \\
+\midrule
+2018 & WaterGAN & GAN with depth-aware synthesis of underwater scenes & Synthesizes underwater datasets and learns color distortion patterns \\
+2018 & UGAN & CycleGAN-based image translation & Removes color casts and improves visual realism \\
+2019 & Water-Net & Gated fusion network & Fuses several enhanced variants to recover contrast and color \\
+2020 & FUnIE-GAN & Conditional GAN for real-time enhancement & Lightweight and suitable for robotic perception \\
+2020 & Zero-DCE & Zero-reference curve estimation & Low-light enhancement without paired ground truth \\
+\bottomrule
+\end{tabular}
+\end{table*}

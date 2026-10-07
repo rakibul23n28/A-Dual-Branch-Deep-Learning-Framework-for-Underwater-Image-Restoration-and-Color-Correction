@@ -1,0 +1,44 @@
+\documentclass[10pt, twocolumn]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{abstract}
+\usepackage{enumitem}
+
+\renewcommand{\abstractnamefont}{\normalfont\bfseries}
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape}
+
+\title{\textbf{A Dual-Branch Deep Learning Framework for Underwater Image Restoration and Color Correction}}
+
+\author{
+    Rakibul Hasan(0112310530), Muhammad Abdullah(011221256), and Tasmia Sultana(0112230573) \\
+    \small Department of Computer Science and Engineering \\
+    \small United International University
+}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{onecolabstract}
+Underwater imagery suffers from wavelength-dependent attenuation, scattering, and color casts that severely degrade visibility and impair downstream perception tasks. Existing enhancement methods often focus on either dehazing or color correction independently, which limits robustness under diverse underwater conditions. In this paper, we propose a dual-branch deep learning framework that jointly performs underwater image restoration and color correction. The restoration branch estimates scene radiance and transmission-related residuals, while the color-correction branch learns per-channel gains and white-balance adjustments to suppress blue-green casts and restore natural chromatic consistency. A fusion module adaptively combines the two outputs and preserves structural details while correcting color imbalance. Experiments on the UIEB benchmark and the challenging underwater subset show that the proposed model consistently improves visual quality and quantitative metrics compared with strong baseline methods. The framework is designed to be lightweight, end-to-end trainable, and effective for real underwater scenes with varying turbidity and lighting conditions.
+\end{onecolabstract}
+
+\noindent\textbf{Keywords:} underwater image restoration, color correction, dual-branch network, image enhancement, deep learning
+
+\input{sections/introduction}
+\input{sections/related_work}
+\input{sections/methodology}
+\input{sections/experiments}
+
+\bibliographystyle{ieeetr}
+\bibliography{references}
+
+\end{document}
